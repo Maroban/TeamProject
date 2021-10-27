@@ -1,0 +1,192 @@
+@charset "UTF-8";
+
+
+/** artbox **/
+#artbox {
+  background-color: #f6f6f6;
+}
+
+.navbar_artmenu {	
+  font-size: 15px;
+  margin: 0px;
+  display: flex;
+  list-style: none;
+}
+
+.navbar_artmenu li {
+  padding: 0px 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar_artmenu a:hover {
+  color: #000000;
+  font-weight: bold;
+}
+
+
+/** section **/
+.section-01 {
+  display: flex;
+  justify-content: center;
+  margin-left:50px;
+}
+
+.leftsection {
+  padding: 0px 15px 150px 0px;
+}
+
+
+.leftsection-01 {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 0px;
+}
+.leftsection-01 div {
+  border-bottom: 1px solid #8b8b8b;
+  height: 0%;
+}
+.leftsection-01 div input {
+  text-align: center;
+  border: none;
+}
+
+.leftsection h2 {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+
+.leftsection-02 table {
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 12px;
+}
+
+.leftsection-02 table {
+	width: 704px;
+	table-layout: fixed;
+}
+
+.leftsection-02 table thead tr td {
+  border-top: 1px solid #000122;
+  border-bottom: 1px solid #000122;
+  padding: 8px 20px;
+}
+
+.leftsection-02 tbody tr td {
+  border-bottom: 1px solid #595959;
+}
+
+.leftsection-02 table tbody tr td {
+  padding: 14px 2px;
+}
+
+.leftsection-02 table tbody tr td:nth-of-type(1) {
+  font-weight: bold;
+  font-size: 20px;
+}
+.leftsection-02 table tbody tr td:nth-of-type(5),
+.leftsection-02 table tbody tr td:nth-of-type(6),
+.leftsection-02 table tbody tr td:nth-of-type(7) {
+  font-size: 11px;
+  text-align: center;
+}
+
+.rightsection {
+  padding: 0px 10px;
+ 
+}
+.rightsection h3 {		
+  padding-bottom:12px;	
+  color:#59007e;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.rightsection-01 {
+  padding: 30px 0px 10px 0px;
+}
+
+.rightsection-02 {
+  padding: 18px 0px;
+}
+.rightsection-02-01 {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 8px;
+}
+
+.rightsection-02 table tbody tr:nth-of-type(2n-1) td {
+  background-color: #cacaca;
+}
+.rightsection-02 table tbody tr td {
+  width:95px;	
+  font-size: 15px;
+  padding: 5px 8px;
+  text-align: center;
+}
+
+.articon{
+	image-rendering: -webkit-optimize-contrast;
+}
+
+.buttonicon{
+	border:0;
+	outline:0px;
+	background-color: #fff;
+}
+
+
+
+
+.containers {
+    margin: 30px 0 0px 0;
+    text-align: center;
+  }
+.containers:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+.containers ul {
+    width: 100%;
+  }
+  
+.xlarge {
+    width: 700px;
+  }
+
+.pagination  ul, li {
+    list-style: none;
+    display: inline;
+    padding-left: 0px;
+    font-size: 12px;
+  }
+
+.pagination  li:hover a {
+    color: black;
+    background-color: #CCCCCC;
+    border: solid 1px #CCCCCC;
+  }
+.pagination li.active a {
+    color: black;
+    background-color: #CCCCCC;
+    border: solid 1px #CCCCCC;
+    font-weight: bold;
+  }
+.pagination li a {
+    border: solid 1px #d7d7d7;
+    border-radius: 0.2rem;
+    color: #7d7d7d;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    padding: 0.5rem 0.9rem;
+  }
+
+
+
+
+

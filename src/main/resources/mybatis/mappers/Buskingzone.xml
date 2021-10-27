@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="buskingzone">
+
+	<select id="buskingzoneList" parameterType="map" resultType="buskingzoneVo">
+		<![CDATA[
+			select user_no,com_img,com_name,address,com_number
+			from company
+			WHERE latitude < #{nlat}
+			and longitude < #{nlng}
+			and latitude > #{slat}
+			and longitude > #{slng}
+		]]>
+	</select>
+	
+	<select id="overlayList" parameterType="int" resultType="buskingzoneVo">
+		<![CDATA[
+			select user_no,com_img,com_name,ceo_name,com_number,address
+			from company
+			where user_no = #{user_no}
+		]]>
+	</select>
+	
+	<select id="overlayStage" parameterType="int" resultType="buskingzoneVo">
+		<![CDATA[
+			select s.stage_name
+			from company c,stage s
+			where c.user_no = #{user_no}
+			and c.user_no = s.user_no
+		]]>
+	</select>
+
+	<select id="overlaySch" parameterType="map" resultType="buskingzoneVo">
+		<![CDATA[
+			select s.user_no,to_char(b.bus_date, 'YYYY-MM-DD"("dy")"') bus_date,b.requirements
+			from stage s, buskingdate b
+			where s.user_no = #{user_no}
+			and s.stage_name = #{stage_name}
+			and s.stage_no = b.stage_no
+			and sysdate <= b.bus_date
+			order by bus_date asc
+		]]>
+	</select>
+	
+		<select id="overlayTime" parameterType="map" resultType="buskingzoneVo">
+		<![CDATA[
+			select t.time_no,t.start_time,t.end_time,b.requirements,s.rain_progress,s.stage_light,s.parking
+			from buskingdate b,stage s,buskingtime t
+			where s.user_no = #{user_no}
+			and s.stage_name = #{stage_name}
+			and b.stage_no = s.stage_no
+			and b.bus_date = #{buskingzone_date}
+			and b.date_no = t.date_no
+		]]>
+	</select>
+	
+	<insert id="buskingApp" parameterType="map">
+		<![CDATA[
+			insert into buskingapp values(SEQ_APP_NO.nextval,#{user_no},#{time_no},#{user_info},sysdate,3)
+		]]>
+	</insert>
+	
+	<select id="buskingList" resultType="buskingzoneVo">
+	<![CDATA[
+	select user_no,com_name,latitude,longitude
+	from company
+	]]>
+	</select>
+	
+	
+
+</mapper>

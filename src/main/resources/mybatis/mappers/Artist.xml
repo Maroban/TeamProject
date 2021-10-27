@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="artist">
+
+	<!-- 아티스트 종합랭킹 리스트 -->
+	<select id="getArtist" resultType="UserVo">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url
+	          
+	      FROM users u, blog b
+	      where user_type = 2 
+          and u.user_no = b.user_no
+          ORDER by ranking_score desc) ot) ort
+          where rn >=1
+          and rn <=10
+          
+		]]>
+	</select>
+
+
+	<!-- 아티스트 라이브 리스트 -->
+	<select id="getArtistLive" resultType="UserVo">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url,
+              TO_CHAR(ort.p_start, 'HH24:MI') p_start
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url,
+              ot.p_start
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url,
+              p.p_start
+	          
+	      FROM users u, blog b, post p
+	      where u.live = 1 
+	      and p.p_end is null
+	      and p.reg_date is null
+          and u.user_no = b.user_no
+          and u.user_no = p.user_no
+          ORDER by p.p_start asc) ot) ort
+          where rn >=1
+          and rn <=10
+		]]>
+	</select>
+
+
+	<!-- 팬 많은 순 리스트 -->
+	<select id="getArtistFan" resultType="UserVo"
+		parameterType="map">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url
+	          
+	      FROM users u, blog b
+	      where u.user_type = 2 
+          and u.user_no = b.user_no
+          ]]>
+		<if test="search != null">
+			<![CDATA[
+			and nickname like '%'||#{search}||'%'
+			]]>
+		</if>
+		<![CDATA[
+		ORDER by u.fan DESC, u.artist_regdate asc) ot) ort
+          where rn >= #{start_num}
+          and rn <= #{end_num}	
+          ]]>
+	</select>
+
+
+	<!-- new 아티스트 리스트 -->
+	<select id="getArtistNew" resultType="UserVo">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url
+	          
+	      FROM users u, blog b
+	      where u.user_type = 2 
+          and u.user_no= b.user_no
+          ]]>
+		<if test="search != null">
+		<![CDATA[
+			and nickname like '%'||#{search}||'%'
+			]]>
+		</if>
+		<![CDATA[
+          ORDER by u.artist_regdate desc) ot) ort
+          where rn >= #{start_num}
+          and rn <= #{end_num}	
+          ]]>
+	</select>
+
+
+	<!-- 아티스트 장르 리스트 -->
+	<select id="getArtistGenre" resultType="UserVo"
+		parameterType="int">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url
+	          
+	      FROM users u, blog b
+	      where u.genre = #{no} 
+          and u.user_no = b.user_no
+          ORDER by u.ranking_score desc) ot) ort
+          where rn >=1
+          and rn <=10
+    ]]>
+	</select>
+
+
+
+
+	<!-- 팬 되기 리스트 -->
+	<select id="getFanList" resultType="UserVo">
+		<![CDATA[
+        select
+            rn,
+            ort.id,
+		    ort.user_img,
+		    ort.genre,
+		    ort.genre_type,
+		    ort.fan,
+		    ort.likes,
+		    TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+		    ort.fan_no,
+		    ort.nickname,
+		    ort.user_no,
+		    ort.artist_no,
+            ort.y_url,
+            ort.f_url,
+            ort.i_url
+
+		from(       select
+            rownum rn,
+            ot.id,
+		    ot.user_img,
+		    ot.genre,
+		    ot.genre_type,
+		    ot.fan,
+		    ot.likes,
+		    ot.artist_regdate,
+		    ot.fan_no,
+		    ot.nickname,
+		    ot.user_no,
+		    ot.artist_no,
+            ot.y_url,
+            ot.f_url,
+            ot.i_url
+
+		from(		SELECT
+		
+		    id,
+		    u.user_img,
+		    u.genre,
+		    u.genre_type,
+		    u.fan,
+		    u.likes,
+		    u.artist_regdate,
+		    f.fan_no,
+		    u.nickname,
+		    u.user_no,
+		    f.artist_no,
+            b.y_url,
+            b.f_url,
+            b.i_url
+            
+		FROM users u, fan f, blog b
+		WHERE u.user_no = f.artist_no 
+        and u.user_no = b.user_no
+        order by f.fan_no ASC )ot)ort
+        where rn >=1
+        and rn <=10
+		]]>
+	</select>
+
+
+	<!-- 아티스트 검색 리스트 -->
+	<select id="getArtistSearch" resultType="UserVo">
+		<![CDATA[
+        SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score,
+              ort.y_url,
+              ort.f_url,
+              ort.i_url
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score,
+              ot.y_url,
+              ot.f_url,
+              ot.i_url
+	          
+	      FROM (	      SELECT
+	      
+	          u.user_no, 
+	          u.id,
+	          u.password,
+	          u.email,
+	          u.nickname,
+	          u.user_img,
+	          u.name,
+	          u.hp,
+	          u.gender,
+	          u.birthday,
+	          u.genre,
+	          u.genre_type,
+	          u.fan,
+	          u.likes,
+	          u.live,
+	          u.artist_regdate,
+	          u.user_type,
+	          u.company_type,
+              u.ranking_score,
+              b.y_url,
+              b.f_url,
+              b.i_url
+	          
+	      FROM users u, blog b
+	      where u.user_type = 2 
+          and u.user_no= b.user_no
+          ]]>
+		<if test="search != null">
+		<![CDATA[
+			and nickname like '%'||#{search}||'%'
+			]]>
+		</if>
+		<![CDATA[
+          ORDER by u.ranking_score desc) ot) ort
+          where rn >= #{start_num}
+          and rn <= #{end_num}	
+          ]]>
+	</select>
+
+	<!-- 블로그 라이브 리스트 가져오기 -->
+	<select id="getBlogLive" resultType="UserVo">
+	<![CDATA[
+	SELECT
+              rn,
+              ort.user_no, 
+	          ort.id,
+	          ort.password,
+	          ort.email,
+	          ort.nickname,
+	          ort.user_img,
+	          ort.name,
+	          ort.hp,
+	          ort.gender,
+	          ort.birthday,
+	          ort.genre,
+	          ort.genre_type,
+	          ort.fan,
+	          ort.likes,
+	          ort.live,
+	          TO_CHAR(ort.artist_regdate, 'YYYY') artist_regdate,
+	          ort.user_type,
+	          ort.company_type,
+              ort.ranking_score
+              
+          FROM (	      SELECT
+              rownum rn,  
+	          ot.user_no,
+	          ot.id,
+	          ot.password,
+	          ot.email,
+	          ot.nickname,
+	          ot.user_img,
+	          ot.name,
+	          ot.hp,
+	          ot.gender,
+	          ot.birthday,
+	          ot.genre,
+	          ot.genre_type,
+	          ot.fan,
+	          ot.likes,
+	          ot.live,
+	          ot.artist_regdate,
+	          ot.user_type,
+	          ot.company_type,
+              ot.ranking_score
+	          
+	      FROM (	      SELECT
+	      
+	          user_no,
+	          id,
+	          password,
+	          email,
+	          nickname,
+	          user_img,
+	          name,
+	          hp,
+	          gender,
+	          birthday,
+	          genre,
+	          genre_type,
+	          fan,
+	          likes,
+	          live,
+	          artist_regdate,
+	          user_type,
+	          company_type,
+              ranking_score
+	          
+	      FROM users
+	      where users.live = 1
+          ORDER by users.ranking_score desc, users.artist_regdate asc) ot) ort
+          where rn >=1
+          and rn <=6
+		]]>
+	</select>
+
+
+	<!-- 팬 로딩 -->
+	<select id="getFanLoading" resultType="UserVo"
+		parameterType="int">
+	<![CDATA[
+	SELECT
+	    user_no,
+	    artist_no
+	FROM
+	fan
+	where user_no = #{user_no}
+	]]>
+	</select>
+
+
+	<!-- 팬 등록여부 -->
+	<select id="getFanOk" resultType="UserVo" parameterType="UserVo">
+	<![CDATA[
+	SELECT
+	    user_no,
+	    artist_no
+	FROM
+	fan
+	where user_no = #{user_no} and artist_no = #{artist_no}
+	]]>
+	</select>
+
+	<!-- 팬 등록여부 -->
+	<select id="getLikesOk" resultType="UserVo"
+		parameterType="UserVo">
+	<![CDATA[
+	SELECT
+	    user_no,
+	    artist_no
+	FROM
+	likes
+	where user_no = #{user_no} and artist_no = #{artist_no}
+	]]>
+	</select>
+
+
+
+	<!-- 페이징 -->
+	<select id="pageCount" resultType="int" parameterType="map">
+	<![CDATA[
+		SELECT
+	    	COUNT(*)
+		FROM
+		    users
+		WHERE
+		    user_type = 2
+	]]>
+		<if test="keyword != null">
+			and nickname like '%'||#{keyword}||'%'
+		</if>
+	</select>
+
+	<!-- Artist Check -->
+	<select id="artistCheck" resultType="String"
+		parameterType="UserVo">
+	<![CDATA[
+		SELECT
+		    user_no
+		FROM
+		fan
+		where user_no = #{artist_no}
+		and artist_no =  #{user_no}
+	]]>
+	</select>
+
+	<!-- Artist Check -->
+	<select id="likeCheck" resultType="String"
+		parameterType="UserVo">
+	<![CDATA[
+		SELECT
+		    user_no
+		FROM
+		likes
+		where user_no = #{artist_no}
+		and artist_no =  #{user_no}
+	]]>
+	</select>
+
+
+
+	<!-- 팬 등록 -->
+	<insert id="getFan" parameterType="UserVo">
+	<![CDATA[
+	INSERT INTO fan
+	VALUES (SEQ_likes_NO.nextval, #{user_no}, #{artist_no})
+	]]>
+	</insert>
+
+	<!-- 좋아요 등록 -->
+	<insert id="getLikes" parameterType="UserVo">
+	<![CDATA[
+	INSERT INTO likes
+	VALUES (SEQ_FAN_NO.nextval, #{user_no}, #{artist_no}, sysdate)
+	]]>
+	</insert>
+
+	<!-- 팬되기 숫자 올리기 -->
+	<update id="artistFanUp" parameterType="int">
+	<![CDATA[
+		UPDATE users set
+		fan = fan +1
+		where user_no = #{no}
+	]]>
+	</update>
+
+	<!-- 좋아요 숫자 올리기 -->
+	<update id="artistLikesUp" parameterType="int">
+	<![CDATA[
+		UPDATE users set
+		likes = likes +1
+		where user_no = #{no}
+	]]>
+	</update>
+
+
+	<!-- 팬되기 숫자 삭제 -->
+	<delete id="deleteFan" parameterType="UserVo">
+	<![CDATA[
+		DELETE fan
+		WHERE
+	        artist_no = #{artist_no}
+	    AND user_no = #{user_no}
+   	]]>
+	</delete>
+
+	<!-- 좋아요 숫자 삭제 -->
+	<delete id="deleteLikes" parameterType="UserVo">
+	<![CDATA[
+		DELETE likes
+		WHERE
+	        artist_no = #{artist_no}
+	    AND user_no = #{user_no}
+   	]]>
+	</delete>
+
+	<!-- 팬되기 숫자 내리기 -->
+	<update id="artistFanDown" parameterType="int">
+	<![CDATA[
+		UPDATE users set
+		fan = fan -1
+		where user_no = #{no}
+	]]>
+	</update>
+
+	<!-- 좋아요 숫자 내리기 -->
+	<update id="artistLikesDown" parameterType="int">
+	<![CDATA[
+		UPDATE users set
+		likes = likes -1
+		where user_no = #{no}
+	]]>
+	</update>
+
+
+
+
+</mapper>

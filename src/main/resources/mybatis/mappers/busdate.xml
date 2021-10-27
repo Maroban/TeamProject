@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="busdate">
+
+	<!-- 공연 날짜 저장(키값 저장) -->
+	<insert id="busdateInsert" parameterType="BusdateVo">
+		<selectKey keyProperty="date_no" resultType="int" order="BEFORE">
+			<![CDATA[
+				select seq_date_no.nextval from dual
+			]]>
+		</selectKey>
+		<![CDATA[
+			insert into buskingDate
+				 		values(#{date_no},
+				 			   #{stage_no},
+				 			   #{bus_date},
+				 			   #{requirements}
+				 		)
+		]]>
+	</insert>
+	
+	<!-- 버스킹존 장소/날짜별 리스트 불러오기 -->
+	<select id="selectBusking" parameterType="BusdateVo" resultType="BusdateVo">
+		<![CDATA[
+			select  bd.date_no as date_no,
+					bd.stage_no as stage_no,
+			        bd.bus_date as bus_date,
+			        bd.requirements as requirements,
+			        bt.time_no as time_no,
+			        bt.start_time as start_time,
+			        bt.end_time as end_time
+			from buskingdate bd, buskingtime bt
+			where bt.date_no = bd.date_no
+			and   bd.stage_no = #{stage_no}
+			and  bd.bus_date = #{bus_date}		
+		
+		]]>
+	</select>
+	
+	<!-- 버스킹존 장소/날짜별 일정 불러오기 -->
+	<select id="selectBusPlan" parameterType="BusdateVo" resultType="BusdateVo">
+		<![CDATA[
+			select  u.nickname
+			        ,bt.end_time
+			        ,bt.start_time
+			FROM
+			    company      c,
+			    stage        s,
+			    buskingdate  bd,
+			    buskingtime  bt,
+			    buskingapp   ba,
+			    users        u
+			WHERE
+			        c.user_no = s.user_no
+			    AND s.stage_no = bd.stage_no
+			    AND bd.date_no = bt.date_no
+			    AND bt.time_no = ba.time_no
+			    AND ba.user_no = u.user_no
+			    and bd.stage_no = #{stage_no}
+			    AND bt.date_no = #{date_no}
+			    And ba.status = 1
+			    order by ba.time_no asc
+		
+		]]>
+	</select>
+	
+	<!-- 공연 날짜 삭제 -->
+	<delete id="buskingDelete" parameterType="int">
+		<![CDATA[
+			delete from buskingdate
+			where date_no = #{date_no}		
+		]]>	
+	</delete>
+	
+	<!-- 해당 공연장 버스킹 날짜 불러오기 -->
+	<select id="selectBusdateList"  parameterType="int" resultType="BusdateVo">
+		<![CDATA[
+			select  date_no,
+				  	bus_date
+			from    buskingdate
+			where   stage_no = #{stage_no}
+		
+		]]>
+	</select>
+	
+</mapper>

@@ -1,0 +1,353 @@
+@charset "UTF-8";
+
+/********** 초기화 **********/
+body, div, ul, li, dl, dt, ol, h1, h2, h3, h4,
+h5, h6, input, fieldset, legend, p, select, table,
+th, td, tr, textarea, button, form, img {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+body {font-family: "맑은 고딕", 돋음; font-size: 12px;}
+ol, ul {list-style: none;}
+a:link {text-decoration: none; color: black;}
+a:visited {text-decoration: none; color: black;}
+a:hover {text-decoration: none; color: black;}
+a:active {text-decoration: none; color: black;}
+
+
+/* clearfix */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+
+#mypage-left {
+    width: 18%;
+    float: left;
+    height: 92%;
+    padding-top: 30px;
+    padding-left: 30px;
+    border-right: 1px solid #bfbfbf;
+    margin: 20px 0px 0px 0px;
+    vertical-align: top;
+}
+
+#mypage-left ul>li {
+    padding-top: 15px;
+}
+
+#mypage-left ul>h4 {
+    padding-bottom: 10px;
+}
+
+#mypage-right {
+    margin-left: 20px;
+    margin-top: 40px;
+    float: left;
+    width: 70%;
+}
+
+#mypage-right-header {
+    padding-bottom: 7px;
+    border-bottom: 2px solid #bfbfbf;
+}
+
+#mypage-right-content {
+    margin-top: 20px;
+}
+
+#mypage-category li {
+    font-size: 14px;
+}
+
+#mypage-category a:hover {
+	font-weight: bold;
+}
+
+/* Table */
+table {
+    border-collapse: collapse;
+    width: 95%;
+
+}
+
+table td {
+    border: 1px solid #E5E5E5;
+    padding: 20px 10px 20px 10px;
+}
+
+.input {
+    margin: 0px 10px;
+    padding: 4px 4px 4px 4px;
+    width: 70%;
+    font-size: 12px;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+
+
+#profilepicturechange {
+    margin-left: 44px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+#profilepicturedelete {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+table tr td:first-child {
+    border-left: 0;
+}
+
+table tr td:last-child,
+table tr th:last-child {
+  border-right: 0;
+}
+
+.table-head {
+    background-color:#F9F9F9;
+    width: 30%;
+}
+
+.table-head label {
+    margin-left: 30px;
+}
+
+label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#profilepicture {
+    border-radius: 70%;
+    margin-left: 10px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    image-rendering: -webkit-optimize-contrast;
+}
+
+#profilesubmit {
+    font-size: 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 22px;
+    margin-bottom: 10px;
+}
+
+#profileupdate {
+    font-size: 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-right: 22px;
+    margin-bottom: 10px;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.radio {
+    margin-left: 10px;
+}
+
+.radiolabel {
+    position: relative;
+    padding-right: 35px;
+    padding-left: 3px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.required:after {
+    content:" *";
+    color: red;
+  }
+
+#check_nickname{
+	margin-top: 3px;
+	padding-left: 11px;
+	color: red;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* stageManage */
+.radio-group {
+	margin-left: 15px;
+}
+
+.radio-group .radio-inline {
+	margin-right: 60px;
+}
+
+.list-group {
+	margin-left:15px;
+}
+
+.list {
+	margin-bottom: 3px;
+}
+
+.label {
+	display: inline;
+    padding: .2em .6em .1em;
+    font-size: 100%;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+    cursor: pointer;
+}
+
+.label-default {
+	display:inline-block;
+    background-color: #777;
+    margin-bottom:3px;
+}
+.delBtn {
+	cursor: pointer;
+	width: 15px;
+    padding-bottom: 2px;
+}
+
+/* buskingZoneManage */
+.icon-img {
+	width: 15px;
+	margin-bottom: 2px;
+}
+.add-img {
+	width: 15px;
+	margin: 0px 4px;
+}
+
+.minus-img{
+		width: 15px;
+	margin: 0px 5px;
+}
+
+.addBtn {
+	cursor: pointer;
+	margin-bottom:3px;
+}
+
+.minusBtn {
+	cursor: pointer;
+	margin-bottom:3px;
+}
+
+/* 임시 css*/
+.ex {
+	margin: 0px 0px;
+}
+
+#setting {
+	cursor: pointer;
+}
+
+.input-time {
+	width: 30%;
+	margin-bottom:3px;
+}
+
+/* applyManage */
+.bg-p {
+	    background-color: #f0eef7;
+}
+
+ #content-filter-area {
+    margin: 0px 50px 0px 0px;
+}
+
+.content-filter {
+    display: inline-block;
+    vertical-align: bottom;
+}
+
+.content-filter .input {
+	width: 105px;
+	height: 25px;
+	margin: 0px 3px 0px 0px;
+	padding: 0px;
+}
+.content-filter .filter-white {
+	background: none;
+	border: none;
+	outline: none;
+}
+
+#mypage-right .btn-area {
+    display: block;
+    margin: 50px 0px 10px 0px;
+    text-align: right;
+    height: 50px;
+}
+
+.table .th-gray{
+	background-color: #F9F9F9;
+}
+
+.filter-img {
+	    width: 23px;
+    padding-bottom: 1px;
+}
+
+.articon{
+	image-rendering: -webkit-optimize-contrast;
+}
+
+.genre-img {
+    width: 70px;
+    height: 24px;
+}
+
+.status-img {
+	width:50px;
+}
+
+.checkbox {
+	margin-top: 7px;
+}
+.click_item {
+	cursor: pointer;
+}
+
+.info_text {
+	color: purple;
+}
+
+.modal-title{
+ font-size: 17px;
+ text-align:left;
+ font-weight: bold;
+}
+
+.plan_nickname {
+	margin-left: 5px;
+}
+
+.btn-size {
+	font-size: 12px;
+    border-radius: 5px;
+    margin: 10px 22px 10px 3px;
+}
+
+.btn-nm {
+	margin: 10px 0px;
+	font-size: 12px;
+    border-radius: 5px;
+}

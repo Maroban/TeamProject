@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+
+
+/**genre box**/
+#genrebox {
+  background-color: #f6f6f6;
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar_genremenu {	
+  font-size: 13px;
+  margin: 0px;
+  display: flex;
+  list-style: none;
+}
+
+
+.navbar_genremenu li {
+  padding:10px;
+}
+
+
+.navbar_genremenu li:hover {
+  background-color: #ffffff;
+  font-weight: bold;
+}
+
+.leftsection-02 {
+	padding-top: 30px;
+}
+
